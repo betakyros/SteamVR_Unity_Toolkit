@@ -415,7 +415,22 @@ namespace VRTK
 
         private void OnCollisionEnter(Collision collision)
         {
+			Debug.Log ("collision enter");
             forceCount += 1;
+			// trigger events
+			float oldState = value;
+			if (ReachedActivationDistance())
+			{
+				if (oldState == 0)
+				{
+					value = 1;
+					events.OnPush.Invoke();
+				}
+			}
+			else
+			{
+				value = 0;
+			}
         }
     }
 }
