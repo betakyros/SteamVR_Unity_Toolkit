@@ -23,16 +23,14 @@ public class FranklinButtonScript : MonoBehaviour {
 		}
 	}
 
-	//moves the button in the -y and disables collisions
-	void Depress() {
+	//moves the button in the -y, then moves it back
+	IEnumerator Depress() {
 		isDepressing = true;
-		StartCoroutine (MoveOverSpeed (this, this.transform - new Vector3 (0, 1), depressDownSpeed));
-		StartCoroutine (MoveOverSpeed (this, this.transform + new Vector3 (0, 1), depressUpSpeed)); 
+		yield return StartCoroutine (MoveOverSpeed (this.gameObject, new Vector3 (this.transform.position.x, this.transform.position.y - 1, this.transform.position.z), depressDownSpeed));
+		yield return StartCoroutine (MoveOverSpeed (this.gameObject, new Vector3 (this.transform.position.x, this.transform.position.y + 1, this.transform.position.z), depressUpSpeed)); 
 		isDepressing = false;
 	}
-
-
-
+		
 	//from internet
 	public IEnumerator MoveOverSpeed (GameObject objectToMove, Vector3 end, float speed){
 		// speed should be 1 unit per second
